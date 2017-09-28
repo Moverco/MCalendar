@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Calender</string>
+    <string name="header_test">May</string>
+    <string name="Monday">星期一</string>
 </resources>
