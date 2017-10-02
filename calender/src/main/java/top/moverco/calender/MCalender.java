@@ -21,5 +21,7 @@ public class MCalender extends LinearLayout {
     public MCalender(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-
+    private void initControl(Context context){
+        bindControl();
+    }
 }

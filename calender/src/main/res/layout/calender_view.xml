@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+    >
 <RelativeLayout
     android:id="@+id/calender_header"
     android:layout_width="match_parent"
@@ -37,46 +38,53 @@
         android:layout_height="40dp"
         >
         <TextView
-            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:text="@string/Sunday"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <TextView
-            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:text="@string/Monday"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <TextView
-            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:text="@string/Tuesday"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <TextView
-            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:text="@string/Wednesday"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <TextView
-            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:text="@string/Thursday"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <TextView
-            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:text="@string/Friday"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
         <TextView
-            android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:text="@string/Saturday"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
     </LinearLayout>
+    <GridView
+        android:id="@+id/calender_grid"
+        android:numColumns="7"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </GridView>
 </LinearLayout>
