@@ -8,4 +8,5 @@
     <string name="Friday">星期五</string>
     <string name="Saturday">星期六</string>
     <string name="Sunday">星期日</string>
+    <string name="days_test">99</string>
 </resources>
