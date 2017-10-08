@@ -5,34 +5,34 @@
               android:orientation="vertical"
     >
 <RelativeLayout
-    android:id="@+id/calender_header"
+    android:id="@+id/calendar_header"
     android:layout_width="match_parent"
     android:layout_height="30dp">
     <ImageView
-        android:id="@+id/calender_pre_button"
+        android:id="@+id/calendar_prev_button"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:src="@drawable/prev"/>
+    <ImageView
+        android:id="@+id/calendar_next_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/next"/>
     <TextView
-        android:id="@+id/calender_header_text"
+        android:id="@+id/calendar_header_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textSize="24sp"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/calender_pre_button"
-        android:layout_toLeftOf="@id/calender_next_button"
+        android:layout_toRightOf="@id/calendar_prev_button"
+        android:layout_toLeftOf="@id/calendar_next_button"
         android:text="@string/header_test"/>
-    <ImageView
-        android:id="@+id/calender_next_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/next"/>
 </RelativeLayout>
     <LinearLayout
-        android:id="@+id/calender_week"
+        android:id="@+id/calendar_week"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -81,10 +81,9 @@
             android:layout_height="match_parent"/>
     </LinearLayout>
     <GridView
-        android:id="@+id/calender_grid"
+        android:id="@+id/calendar_grid"
         android:numColumns="7"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </GridView>
 </LinearLayout>
