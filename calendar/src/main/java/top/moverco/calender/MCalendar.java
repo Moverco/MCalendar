@@ -1,6 +1,7 @@
 package top.moverco.calender;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -43,7 +44,8 @@ public class MCalendar extends LinearLayout {
         super(context, attrs, defStyleAttr);
         initControl(context);
     }
-    private void initControl(Context context){
+
+    private void initControl(Context context) {
         bindControl(context);
         bindControlEvent();
         renderCalendar();
@@ -53,14 +55,14 @@ public class MCalendar extends LinearLayout {
         btnPrev.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                curDate.add(Calendar.MONTH,-1);
+                curDate.add(Calendar.MONTH, -1);
                 renderCalendar();
             }
         });
         btnNext.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                curDate.add(Calendar.MONTH,1);
+                curDate.add(Calendar.MONTH, 1);
                 renderCalendar();
             }
         });
@@ -73,21 +75,21 @@ public class MCalendar extends LinearLayout {
         ArrayList<Date> cells = new ArrayList<>();
         Calendar calendar = (Calendar) curDate.clone();
 
-        calendar.set(Calendar.DAY_OF_MONTH,1);
-        int prevDays = calendar.get(Calendar.DAY_OF_WEEK)-1;
-        calendar.add(Calendar.DAY_OF_MONTH,-prevDays);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        int prevDays = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        calendar.add(Calendar.DAY_OF_MONTH, -prevDays);
 
-        int maxCellsCount = 6*7;
-        while (cells.size() < maxCellsCount){
+        int maxCellsCount = 6 * 7;
+        while (cells.size() < maxCellsCount) {
             cells.add(calendar.getTime());
-            calendar.add(Calendar.DAY_OF_MONTH,1);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
-        grid.setAdapter(new CalendarAdapter(getContext(),cells));
+        grid.setAdapter(new CalendarAdapter(getContext(), cells));
     }
 
     private void bindControl(Context context) {
         LayoutInflater infalter = LayoutInflater.from(context);
-        infalter.inflate(R.layout.calendar_view,this);
+        infalter.inflate(R.layout.calendar_view, this);
 
         btnPrev = (ImageView) findViewById(R.id.calendar_prev_button);
         btnNext = (ImageView) findViewById(R.id.calendar_next_button);
@@ -96,11 +98,12 @@ public class MCalendar extends LinearLayout {
 
     }
 
-    private class CalendarAdapter extends ArrayAdapter<Date>{
+    private class CalendarAdapter extends ArrayAdapter<Date> {
 
         LayoutInflater mInflater;
-        public CalendarAdapter(@NonNull Context context,ArrayList<Date> days) {
-            super(context,R.layout.calendar_text_day);
+
+        public CalendarAdapter(@NonNull Context context, ArrayList<Date> days) {
+            super(context, R.layout.calendar_text_day, days);
             mInflater = LayoutInflater.from(context);
         }
 
@@ -108,11 +111,28 @@ public class MCalendar extends LinearLayout {
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             Date date = getItem(position);
-            if (convertView==null){
-                convertView = mInflater.inflate(R.layout.calendar_text_day,parent,false);
+            if (convertView == null) {
+                convertView = mInflater.inflate(R.layout.calendar_text_day, parent, false);
             }
             int day = date.getDate();
-            ((TextView)convertView).setText(String.valueOf(day));
+            ((TextView) convertView).setText(String.valueOf(day));
+
+            Date now = new Date();
+
+            Calendar calendar = (Calendar) curDate.clone();
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+            Boolean isTheCurMonth = false;
+            if (now.getMonth() == date.getMonth()) {
+                isTheCurMonth = true;
+                ((TextView) convertView).setTextColor(Color.parseColor("#000000"));
+                if (now.getDate() == date.getDate() && now.getYear() == date.getYear()) {
+                    ((TextView) convertView).setTextColor(Color.parseColor("#ff0000"));
+                }
+            }else {
+                ((TextView) convertView).setTextColor(Color.parseColor("#666666"));
+            }
+
+
             return convertView;
         }
     }
