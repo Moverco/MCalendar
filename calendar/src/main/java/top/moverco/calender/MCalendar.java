@@ -2,6 +2,7 @@ package top.moverco.calender;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -66,6 +67,7 @@ public class MCalendar extends LinearLayout {
                 renderCalendar();
             }
         });
+
     }
 
     private void renderCalendar() {
@@ -98,9 +100,15 @@ public class MCalendar extends LinearLayout {
 
     }
 
-    private class CalendarAdapter extends ArrayAdapter<Date> {
+     class CalendarAdapter extends ArrayAdapter<Date> {
 
         LayoutInflater mInflater;
+        @LayoutRes private int calendarItemView;
+        @LayoutRes private final int defaultCalendarItemView = R.layout.calendar_text_day;
+
+        public void setCalendarItemView(int calendarItemView) {
+            this.calendarItemView = calendarItemView;
+        }
 
         public CalendarAdapter(@NonNull Context context, ArrayList<Date> days) {
             super(context, R.layout.calendar_text_day, days);
@@ -112,7 +120,7 @@ public class MCalendar extends LinearLayout {
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             Date date = getItem(position);
             if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.calendar_text_day, parent, false);
+                convertView = mInflater.inflate(defaultCalendarItemView, parent, false);
             }
             int day = date.getDate();
             ((TextView) convertView).setText(String.valueOf(day));
