@@ -56,18 +56,22 @@ public class MCalendar extends LinearLayout {
         btnPrev.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                curDate.add(Calendar.MONTH, -1);
+                changeCalendarMonth(curDate,-1);
                 renderCalendar();
             }
         });
         btnNext.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                curDate.add(Calendar.MONTH, 1);
+                changeCalendarMonth(curDate,1);
                 renderCalendar();
             }
         });
 
+    }
+
+    private void changeCalendarMonth(Calendar calendar,int change) {
+        calendar.add(Calendar.MONTH, change);
     }
 
     private void renderCalendar() {
@@ -79,12 +83,11 @@ public class MCalendar extends LinearLayout {
 
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         int prevDays = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-        calendar.add(Calendar.DAY_OF_MONTH, -prevDays);
-
+        changeCalendarMonth(calendar,-prevDays);
         int maxCellsCount = 6 * 7;
         while (cells.size() < maxCellsCount) {
             cells.add(calendar.getTime());
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            changeCalendarMonth(calendar,1);
         }
         grid.setAdapter(new CalendarAdapter(getContext(), cells));
     }
@@ -100,12 +103,15 @@ public class MCalendar extends LinearLayout {
 
     }
 
-     class CalendarAdapter extends ArrayAdapter<Date> {
+    class CalendarAdapter extends ArrayAdapter<Date> {
 
         LayoutInflater mInflater;
-        @LayoutRes private int calendarItemView;
-        @LayoutRes private final int defaultCalendarItemView = R.layout.calendar_text_day;
+        Boolean isTheCurMonth = false;
 
+        @LayoutRes
+        private final int defaultCalendarItemView = R.layout.calendar_text_day;
+        @LayoutRes
+        private int calendarItemView = defaultCalendarItemView;
         public void setCalendarItemView(int calendarItemView) {
             this.calendarItemView = calendarItemView;
         }
@@ -120,7 +126,7 @@ public class MCalendar extends LinearLayout {
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             Date date = getItem(position);
             if (convertView == null) {
-                convertView = mInflater.inflate(defaultCalendarItemView, parent, false);
+                convertView = mInflater.inflate(calendarItemView, parent, false);
             }
             int day = date.getDate();
             ((TextView) convertView).setText(String.valueOf(day));
@@ -129,18 +135,15 @@ public class MCalendar extends LinearLayout {
 
             Calendar calendar = (Calendar) curDate.clone();
             calendar.set(Calendar.DAY_OF_MONTH, 1);
-            Boolean isTheCurMonth = false;
             if (now.getMonth() == date.getMonth()) {
                 isTheCurMonth = true;
                 ((TextView) convertView).setTextColor(Color.parseColor("#000000"));
                 if (now.getDate() == date.getDate() && now.getYear() == date.getYear()) {
                     ((TextView) convertView).setTextColor(Color.parseColor("#ff0000"));
                 }
-            }else {
+            } else {
                 ((TextView) convertView).setTextColor(Color.parseColor("#666666"));
             }
-
-
             return convertView;
         }
     }
