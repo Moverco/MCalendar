@@ -34,6 +34,7 @@ public class MCalendar extends LinearLayout {
     private GridView grid;
     private Calendar curDate = Calendar.getInstance();
     private String displayFormat;
+    private int curShownMonth = -1;
 
     private final static int CALENDAR_PREV = -1;
     private final static int CALENDAR_NEXT = 1;
@@ -105,8 +106,10 @@ public class MCalendar extends LinearLayout {
         Calendar calendar = (Calendar) curDate.clone();
 
         calendar.set(Calendar.DAY_OF_MONTH, 1);
+        curShownMonth = calendar.getTime().getMonth();
         int prevDays = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-        changeCalendarMonth(calendar, -prevDays);
+        calendar.add(Calendar.DAY_OF_WEEK, -prevDays);
+//        changeCalendarMonth(calendar, -prevDays);
         int maxCellsCount = 6 * 7;
         while (cells.size() < maxCellsCount) {
             cells.add(calendar.getTime());
@@ -170,15 +173,16 @@ public class MCalendar extends LinearLayout {
 
             Calendar calendar = (Calendar) curDate.clone();
             calendar.set(Calendar.DAY_OF_MONTH, CALENDAR_NEXT);
-            if (now.getMonth() == date.getMonth()) {
-                isTheCurMonth = true;
+            if (curShownMonth == date.getMonth()) {
                 ((TextView) convertView).setTextColor(Color.parseColor("#000000"));
-                if (now.getDate() == date.getDate() && now.getYear() == date.getYear()) {
-                    ((TextView) convertView).setTextColor(Color.parseColor("#ff0000"));
-                }
             } else {
                 ((TextView) convertView).setTextColor(Color.parseColor("#666666"));
             }
+            if (now.getYear() == date.getYear() && now.getMonth() == date.getMonth() && now.getDate() == date.getDate()) {
+                ((TextView) convertView).setTextColor(Color.parseColor("#ff0000"));
+            }
+
+
             return convertView;
         }
     }
